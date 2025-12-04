@@ -1,0 +1,62 @@
+@extends('master')
+
+@section('title', 'Daftar Departemen')
+
+@section('content')
+    {{-- Header Halaman --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Daftar Departemen</h2>
+        <a href="{{ route('departments.create') }}" class="btn btn-primary shadow-sm">
+            + Tambah Departemen
+        </a>
+    </div>
+
+    {{-- Alert Pesan Sukses --}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- Tabel Data --}}
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th width="5%" class="text-center">No</th>
+                    <th>Nama Departemen</th>
+                    <th width="15%" class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($departments as $key => $department)
+                <tr>
+                    <td class="text-center">{{ $key + 1 }}</td>
+                    <td>{{ $department->nama_departemen }}</td>
+                    <td class="text-center">
+                        {{-- Group Tombol Aksi --}}
+                        <div class="btn-group" role="group">
+                            {{-- Tombol Edit (Siapkan kodenya tapi di-komen dulu jika belum ada method edit) --}}
+                            {{-- <a href="{{ route('departments.edit', $department->id) }}" class="btn btn-sm btn-warning text-white">Edit</a> --}}
+                            
+                            {{-- Form Delete --}}
+                            <form action="{{ route('departments.destroy', $department->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus departemen ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" class="text-center py-4 text-muted">
+                        <em>Data departemen belum tersedia.</em>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+@endsection

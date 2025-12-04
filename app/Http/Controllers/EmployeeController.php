@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\Department;
+use App\Models\Position;
 
 class EmployeeController extends Controller
 {
@@ -21,7 +23,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        // Ambil data untuk dropdown
+        $departments = Department::all();
+        $positions = Position::all();
+        
+        return view('employees.create', compact('departments', 'positions'));
     }
 
     /**
@@ -31,15 +37,20 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:employees,email', // Tambah unique biar aman
             'nomor_telepon' => 'required|string|max:20',
             'tanggal_lahir' => 'required|date',
-            'alamat' => 'required|string|max:255',
+            'alamat' => 'required|string',
             'tanggal_masuk' => 'required|date',
-            'status' => 'required|string|max:50',
+            'status' => 'required',
+            // Validasi Foreign Key
+            'departemen_id' => 'required|exists:departments,id',
+            'jabatan_id' => 'required|exists:positions,id',
         ]);
+
         Employee::create($request->all());
-        return redirect()->route('employees.index');
+
+        return redirect()->route('employees.index')->with('success', 'Pegawai berhasil ditambahkan');
     }
 
     /**
@@ -56,8 +67,11 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::find($id);
-        return view('employees.edit',compact('employee'));
+        $employee = Employee::findOrFail($id);
+        $departments = Department::all();
+        $positions = Position::all();
+
+        return view('employees.edit', compact('employee', 'departments', 'positions'));
     }
 
     /**
@@ -65,26 +79,23 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $$request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            // Email ignore id saat update agar tidak error unique diri sendiri
+            'email' => 'required|email|max:255|unique:employees,email,'.$id, 
             'nomor_telepon' => 'required|string|max:20',
             'tanggal_lahir' => 'required|date',
-            'alamat' => 'required|string|max:255',
+            'alamat' => 'required|string',
             'tanggal_masuk' => 'required|date',
-            'status' => 'required|string|max:50',
+            'status' => 'required',
+            'departemen_id' => 'required|exists:departments,id',
+            'jabatan_id' => 'required|exists:positions,id',
         ]);
+
         $employee = Employee::findOrFail($id);
-        $employee->update($request->only([
-            'nama_lengkap',
-            'email',
-            'nomor_telepon',
-            'tanggal_lahir',
-            'alamat',
-            'tanggal_masuk',
-            'status',
-        ]));
-        return redirect()->route('employees.index');
+        $employee->update($request->all());
+
+        return redirect()->route('employees.index')->with('success', 'Data pegawai berhasil diupdate');
     }
 
     /**
