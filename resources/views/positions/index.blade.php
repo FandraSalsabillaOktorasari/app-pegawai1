@@ -38,8 +38,7 @@
                     <td>Rp {{ number_format($position->gaji_pokok, 0, ',', '.') }}</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
-                            {{-- Tombol Edit (Opsional, aktifkan jika method edit sudah ada) --}}
-                            {{-- <a href="{{ route('positions.edit', $position->id) }}" class="btn btn-sm btn-warning text-white">Edit</a> --}}
+                            <a href="{{ route('positions.edit', $position->id) }}" class="btn btn-sm btn-warning text-white">Edit</a>
                             
                             {{-- Form Delete --}}
                             <form action="{{ route('positions.destroy', $position->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jabatan ini?');">

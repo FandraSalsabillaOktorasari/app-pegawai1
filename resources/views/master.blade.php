@@ -124,7 +124,7 @@
     {{-- Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/employees') }}">
+            <a class="navbar-brand" href="{{ route('dashboard') }}">
                 App Pegawai
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -151,6 +151,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('salaries*') ? 'active' : '' }}" href="{{ url('/salaries') }}">Gaji</a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link {{ request()->is('report*') ? 'active' : '' }}" href="{{ route('reports.index') }}">Laporan</a>
                     </li>
                 </ul>
             </div>
