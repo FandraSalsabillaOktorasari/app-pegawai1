@@ -109,6 +109,46 @@
             box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
         }
 
+        /* --- TAMBAHAN CSS UNTUK TOMBOL CANTIK --- */
+
+        /* Gaya Dasar Tombol Gradient */
+        .btn-gradient {
+            border: none;
+            color: white;
+            padding: 12px 25px; /* Lebih besar sedikit */
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Efek Hover Umum */
+        .btn-gradient:hover {
+            color: white;
+            transform: translateY(-3px); /* Tombol naik sedikit saat di-hover */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* Bayangan makin jelas */
+        }
+
+        /* 1. Tombol Biru/Ungu (Untuk Laporan Pegawai) - Menggantikan btn-primary biasa */
+        .btn-gradient-primary {
+            background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 2. Tombol Hijau Segar (Untuk Absensi) */
+        .btn-gradient-success {
+            background-image: linear-gradient(135deg, #42e695 0%, #3bb2b8 100%);
+            box-shadow: 0 5px 15px rgba(66, 230, 149, 0.4);
+        }
+
+        /* 3. Tombol Merah Menyala (Untuk Gaji) */
+        .btn-gradient-danger {
+            background-image: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+        
         /* Footer */
         footer {
             margin-top: 60px;
@@ -154,6 +194,9 @@
                     </li>
                     <li class="nav-item">
                          <a class="nav-link {{ request()->is('report*') ? 'active' : '' }}" href="{{ route('reports.index') }}">Laporan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('projects*') ? 'active' : '' }}" href="{{ route('projects.index') }}">Project</a>
                     </li>
                 </ul>
             </div>

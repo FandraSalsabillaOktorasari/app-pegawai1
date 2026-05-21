@@ -10,9 +10,15 @@ class PositionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $positions = Position::all();
+        $query = \App\Models\Position::query();
+
+        if ($request->has('search')) {
+            $query->where('nama_jabatan', 'like', '%' . $request->search . '%');
+        }
+
+        $positions = $query->paginate(10)->withQueryString();
         return view('positions.index', compact('positions'));
     }
 

@@ -19,12 +19,21 @@
             </div>
         </div>
 
-        {{-- Card Placeholder (Untuk Laporan Lain Nanti) --}}
+        {{-- Card Laporan Absensi & Gaji --}}
         <div class="col-md-6">
-            <div class="card shadow-sm h-100 bg-light border-0">
-                <div class="card-body text-center d-flex flex-column justify-content-center">
-                    <h5 class="text-muted">Laporan Gaji & Absensi</h5>
-                    <p class="small text-muted">Fitur akan datang...</p>
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-file-earmark-text-fill text-success"></i> Laporan Lainnya</h5>
+                    <p class="card-text text-muted">Cetak laporan riwayat kehadiran dan rekapitulasi gaji karyawan.</p>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('reports.attendance.pdf') }}" target="_blank" class="btn btn-outline-success">
+                            <i class="bi bi-printer"></i> Cetak Laporan Absensi
+                        </a>
+                        <a href="{{ route('reports.salaries.pdf') }}" target="_blank" class="btn btn-outline-danger">
+                            <i class="bi bi-printer"></i> Cetak Laporan Gaji
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

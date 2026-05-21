@@ -3,12 +3,23 @@
 @section('title', 'Daftar Jabatan')
 
 @section('content')
-    {{-- Header Halaman --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Daftar Jabatan</h2>
-        <a href="{{ route('positions.create') }}" class="btn btn-primary shadow-sm">
-            + Tambah Jabatan
-        </a>
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2 class="mb-0">Daftar Jabatan</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-md-end gap-2">
+                <form action="{{ route('positions.index') }}" method="GET" class="d-flex">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari jabatan..." value="{{ request('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                    </div>
+                </form>
+                <a href="{{ route('positions.create') }}" class="btn btn-primary text-nowrap">
+                    + Tambah Posisi
+                </a>
+            </div>
+        </div>
     </div>
 
     {{-- Alert Pesan Sukses --}}
@@ -58,5 +69,9 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+    {{-- Tambahkan Pagination --}}
+    <div class="d-flex justify-content-end mt-3">
+        {{ $positions->links('pagination::bootstrap-5') }}
     </div>
 @endsection

@@ -3,12 +3,23 @@
 @section('title', 'Daftar Absensi')
 
 @section('content')
-    {{-- Header Halaman --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Daftar Absensi Karyawan</h2>
-        <a href="{{ route('attendance.create') }}" class="btn btn-primary shadow-sm">
-            + Tambah Absensi
-        </a>
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2 class="mb-0">Daftar Absensi</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-md-end gap-2">
+                <form action="{{ route('attendance.index') }}" method="GET" class="d-flex">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama karyawan..." value="{{ request('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                    </div>
+                </form>
+                <a href="{{ route('attendance.create') }}" class="btn btn-primary text-nowrap">
+                    + Tambah Absensi
+                </a>
+            </div>
+        </div>
     </div>
 
     {{-- Alert Pesan Sukses --}}
@@ -79,5 +90,8 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        {{ $attendances->links('pagination::bootstrap-5') }}
     </div>
 @endsection

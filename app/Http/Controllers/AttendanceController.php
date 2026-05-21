@@ -11,10 +11,19 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil data absensi beserta data karyawannya (Eager Loading)
-        $attendances = Attendance::with('employee')->latest()->get();
+        $query = \App\Models\Attendance::with('employee')->latest();
+
+        if ($request->has('search')) {
+        // Mencari berdasarkan nama karyawan di tabel relasi
+            $search = $request->search;
+            $query->whereHas('employee', function($q) use ($search) {
+                $q->where('nama_lengkap', 'like', '%' . $search . '%');
+            });
+        }
+
+        $attendances = $query->paginate(10)->withQueryString();
         return view('attendance.index', compact('attendances'));
     }
 

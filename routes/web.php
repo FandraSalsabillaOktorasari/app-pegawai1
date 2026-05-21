@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,3 +31,11 @@ Route::get('/report', [ReportController::class, 'index'])->name('reports.index')
 
 // Route Action Cetak PDF
 Route::get('/report/employees/pdf', [ReportController::class, 'printEmployees'])->name('reports.employees.pdf');
+
+Route::get('/report', [ReportController::class, 'index'])->name('reports.index');
+Route::get('/report/employees/pdf', [ReportController::class, 'printEmployees'])->name('reports.employees.pdf');
+
+Route::get('/report/attendance/pdf', [ReportController::class, 'printAttendance'])->name('reports.attendance.pdf');
+Route::get('/report/salaries/pdf', [ReportController::class, 'printSalaries'])->name('reports.salaries.pdf');
+
+Route::resource('projects', ProjectController::class);

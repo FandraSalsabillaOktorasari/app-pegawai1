@@ -3,12 +3,23 @@
 @section('title', 'Daftar Gaji')
 
 @section('content')
-    {{-- Header Halaman --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Daftar Gaji Karyawan</h2>
-        <a href="{{ route('salaries.create') }}" class="btn btn-primary shadow-sm">
-            + Input Gaji Baru
-        </a>
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2 class="mb-0">Daftar Gaji</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-md-end gap-2">
+                <form action="{{ route('salaries.index') }}" method="GET" class="d-flex">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama/bulan..." value="{{ request('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                    </div>
+                </form>
+                <a href="{{ route('salaries.create') }}" class="btn btn-primary text-nowrap">
+                    + Input Gaji Baru
+                </a>
+            </div>
+        </div>
     </div>
 
     {{-- Alert Pesan Sukses --}}
@@ -73,5 +84,9 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+    {{-- Tambahkan Pagination --}}
+    <div class="d-flex justify-content-end mt-3">
+        {{ $salaries->links('pagination::bootstrap-5') }}
     </div>
 @endsection

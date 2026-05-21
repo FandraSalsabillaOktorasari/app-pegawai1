@@ -9,11 +9,16 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil data dan mengirim ke view
-    $departments = \App\Models\Department::all(); // atau paginate(5)
-    return view('departments.index', compact('departments'));
+        $query = \App\Models\Department::query();
+
+        if ($request->has('search')) {
+            $query->where('nama_departemen', 'like', '%' . $request->search . '%');
+        }
+
+        $departments = $query->paginate(10)->withQueryString();
+        return view('departments.index', compact('departments'));
     }
 
     /**

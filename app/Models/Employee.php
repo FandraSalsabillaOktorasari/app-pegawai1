@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'nama_lengkap',
         'email',
@@ -14,6 +16,8 @@ class Employee extends Model
         'alamat',
         'tanggal_masuk',
         'status',
+        'departemen_id', // Wajib dimasukkan karena kita sudah membuat relasi
+        'jabatan_id',    // Wajib dimasukkan karena kita sudah membuat relasi
     ];
 
     // Relasi: Karyawan milik 1 Departemen
@@ -39,4 +43,22 @@ class Employee extends Model
     {
         return $this->hasMany(Salary::class, 'karyawan_id');
     }
+
+    // Relasi Many-to-Many: Pegawai mengerjakan banyak Proyek
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_employee')
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+
+    // Relasi Skill: Pegawai punya banyak Skill dengan Level tertentu
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'employee_skill')
+                    ->withPivot('level')
+                    ->withTimestamps();
+    }
+
+
 }
